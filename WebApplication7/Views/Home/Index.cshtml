@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<br />
+<br />
+<br />
+<div class="jumbotron">
+    <h3>Welcome to our Digital library Management system</h3>
+
+   
+    <br />
+    <p class="lead">
+        You are about a fantastic collection of good books 
+        <br />
+        , world of books ! hope you uselful time , enjoy
+    </p>
+    @Html.ActionLink(" see books categories ", "Index", "categories", new { area = "" }, new { @class = "btn btn-primary btn-lg" })
+    @*<p><a href="~/ class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+           you should register to enjoy
+            <br />
+            <br />
+             the full services of the site
+        </p>
+        @Html.ActionLink(" register here ", "Create", "members", new { area = "" }, new { @class = "btn btn-default" })
+        @*@Html.ActionLink("show all members", "index", "members")
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+    </div>
+    <div class="col-md-4">
+        <h2>Get more services</h2>
+        <p> it is easier for registered members to  browse all boks and search thier favourite books in a less time  and show all book details</p>
+        <p>@Html.ActionLink(" find your book now ", "Index", "books", new { area = "" }, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>get your books from our library</h2>
+        <p>if you wants to borrow a book You can easily get it by visiting our libaray at following address or contact us from here  .</p>
+        <p>@Html.ActionLink("contact-info", "Contact", "Home", new { area = "" }, new { @class = "btn btn-default" })</p>
+    </div>
+</div>

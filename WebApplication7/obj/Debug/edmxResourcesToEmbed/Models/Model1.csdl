@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="libModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="isbn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="price" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="category_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="category" Relationship="Self.FK_bookcategory" FromRole="books" ToRole="category" />
+    <NavigationProperty Name="lendings" Relationship="Self.FK_booklending" FromRole="books" ToRole="lendings" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="catname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="books" Relationship="Self.FK_bookcategory" FromRole="category" ToRole="books" />
+  </EntityType>
+  <EntityType Name="lending">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="starttime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="endtime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="memberId" Type="Int32" Nullable="false" />
+    <Property Name="book_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="book" Relationship="Self.FK_booklending" FromRole="lendings" ToRole="books" />
+    <NavigationProperty Name="member" Relationship="Self.FK_memberlending" FromRole="lendings" ToRole="members" />
+  </EntityType>
+  <EntityType Name="member">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="S_S_N" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" DefaultValue="0" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="lendings" Relationship="Self.FK_memberlending" FromRole="members" ToRole="lendings" />
+  </EntityType>
+  <Association Name="FK_bookcategory">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="books" Type="Self.book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="books">
+        <PropertyRef Name="category_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_booklending">
+    <End Role="books" Type="Self.book" Multiplicity="1" />
+    <End Role="lendings" Type="Self.lending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="books">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="lendings">
+        <PropertyRef Name="book_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_memberlending">
+    <End Role="members" Type="Self.member" Multiplicity="1" />
+    <End Role="lendings" Type="Self.lending" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="lendings">
+        <PropertyRef Name="memberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="libEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="books" EntityType="Self.book" />
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="lendings" EntityType="Self.lending" />
+    <EntitySet Name="members" EntityType="Self.member" />
+    <AssociationSet Name="FK_bookcategory" Association="Self.FK_bookcategory">
+      <End Role="category" EntitySet="categories" />
+      <End Role="books" EntitySet="books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_booklending" Association="Self.FK_booklending">
+      <End Role="books" EntitySet="books" />
+      <End Role="lendings" EntitySet="lendings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_memberlending" Association="Self.FK_memberlending">
+      <End Role="members" EntitySet="members" />
+      <End Role="lendings" EntitySet="lendings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

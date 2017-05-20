@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="libModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="books">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="isbn" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="price" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="author" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="category_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="catname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="lendings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="starttime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="endtime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="memberId" Type="int" Nullable="false" />
+    <Property Name="book_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="members">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="S_S_N" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="role" Type="nvarchar(max)" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_bookcategory">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="books" Type="Self.books" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="books">
+        <PropertyRef Name="category_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_booklending">
+    <End Role="books" Type="Self.books" Multiplicity="1" />
+    <End Role="lendings" Type="Self.lendings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="books">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="lendings">
+        <PropertyRef Name="book_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_memberlending">
+    <End Role="members" Type="Self.members" Multiplicity="1" />
+    <End Role="lendings" Type="Self.lendings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="members">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="lendings">
+        <PropertyRef Name="memberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="libModelStoreContainer">
+    <EntitySet Name="books" EntityType="Self.books" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="lendings" EntityType="Self.lendings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="members" EntityType="Self.members" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_bookcategory" Association="Self.FK_bookcategory">
+      <End Role="category" EntitySet="category" />
+      <End Role="books" EntitySet="books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_booklending" Association="Self.FK_booklending">
+      <End Role="books" EntitySet="books" />
+      <End Role="lendings" EntitySet="lendings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_memberlending" Association="Self.FK_memberlending">
+      <End Role="members" EntitySet="members" />
+      <End Role="lendings" EntitySet="lendings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

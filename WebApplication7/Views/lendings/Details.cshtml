@@ -1,0 +1,50 @@
+﻿@model WebApplication7.Models.lending
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>lending</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.starttime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.starttime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endtime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endtime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.book.isbn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.book.isbn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.member.firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.member.firstname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
